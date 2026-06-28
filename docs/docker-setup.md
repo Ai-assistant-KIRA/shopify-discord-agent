@@ -24,15 +24,23 @@ Inside Docker, n8n reaches MCP at `http://mcp:3000/sse`. The bridge reaches n8n 
 - Discord bot token
 - Google Vertex credentials configured in n8n (after first import)
 
+## Quick start (one-time credentials)
+
+```bash
+cd shopify-discord-agent
+npm install
+npm run setup          # saves Shopify + Discord → config/.env (once)
+docker compose up -d --build
+```
+
+Credentials in `config/.env` persist across restarts. Services use `restart: unless-stopped`.
+
 ## Quick start (mock demo)
 
 No Shopify credentials required.
 
 ```bash
-cd shopify-discord-agent
-cp .env.docker.example .env
-# Add DISCORD_BOT_TOKEN to .env
-
+npm run setup          # choose mock mode when prompted
 docker compose -f docker-compose.yml -f docker-compose.mock.yml up -d --build
 ```
 
@@ -49,13 +57,13 @@ Verify MCP: **http://localhost:3000/health**
 
 ## Live Shopify store
 
-```bash
-cp .env.docker.example .env
-# Fill SHOPIFY_DOMAIN, SHOPIFY_ACCESS_TOKEN, DISCORD_BOT_TOKEN
-# Set SHOPIFY_READ_ONLY=false for write tools
+Run `npm run setup` with your store domain and `shpat_` token, then:
 
+```bash
 docker compose up -d --build
 ```
+
+To enable write tools, edit `config/.env`: set `SHOPIFY_READ_ONLY=false`, then `docker compose restart mcp`.
 
 Import the same **`.docker.json`** workflow file. See [shopify-setup.md](shopify-setup.md) for API scopes.
 

@@ -1,7 +1,7 @@
 import { Client, GatewayIntentBits } from "discord.js";
-import dotenv from "dotenv";
+import { loadEnv } from "../lib/load-env.mjs";
 
-dotenv.config();
+loadEnv();
 
 const DISCORD_BOT_TOKEN = process.env.DISCORD_BOT_TOKEN;
 const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL || "http://localhost:5678/webhook/discord";

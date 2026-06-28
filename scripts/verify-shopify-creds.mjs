@@ -1,7 +1,7 @@
-import dotenv from "dotenv";
 import { resolveCliAccessToken } from "../lib/cli-auth.mjs";
+import { loadEnv, configExists } from "../lib/load-env.mjs";
 
-dotenv.config();
+loadEnv();
 
 const SHOPIFY_DOMAIN = process.env.SHOPIFY_DOMAIN?.trim();
 const API_VERSION = process.env.SHOPIFY_API_VERSION || "2025-01";
@@ -11,8 +11,8 @@ const SHOPIFY_ACCESS_TOKEN =
   (process.env.SHOPIFY_CLI_AUTH === "true" ? resolveCliAccessToken() : "");
 
 if (!SHOPIFY_DOMAIN || !SHOPIFY_ACCESS_TOKEN) {
-  console.error("SHOPIFY_DOMAIN and a Shopify access token are required in .env");
-  console.error("Use SHOPIFY_ACCESS_TOKEN=shpat_... or SHOPIFY_CLI_AUTH=true after `shopify login`");
+  console.error("SHOPIFY_DOMAIN and SHOPIFY_ACCESS_TOKEN are required.");
+  console.error(configExists() ? "Check config/.env values." : "Run: npm run setup");
   process.exit(1);
 }
 

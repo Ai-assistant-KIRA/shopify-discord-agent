@@ -16,6 +16,7 @@
   "scripts": {
     "mcp": "node shopify-mcp-server.mjs",
     "mcp:mock": "cross-env SHOPIFY_MOCK_MODE=true node shopify-mcp-server.mjs",
+    "setup": "node scripts/setup.mjs",
     "bridge": "node scripts/discord-bridge.mjs",
     "verify:shopify": "node scripts/verify-shopify-creds.mjs",
     "import:workflow": "node scripts/import-workflow.mjs",

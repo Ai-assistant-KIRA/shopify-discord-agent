@@ -39,36 +39,38 @@ https://github.com/Ai-assistant-KIRA/shopify-discord-agent/assets/main/assets/de
 
 ## Quick start (Docker)
 
-Fastest path — no local Node install, mock data included:
+**One-time setup** — credentials are saved to `config/.env` and loaded on every start (permanent across restarts):
 
 ```bash
 git clone https://github.com/Ai-assistant-KIRA/shopify-discord-agent.git
 cd shopify-discord-agent
-cp .env.docker.example .env
-# Add your DISCORD_BOT_TOKEN to .env
-
-npm run docker:mock
+npm install
+npm run setup          # once: Shopify + Discord credentials → config/.env
+npm run docker:up      # starts stack; auto-restarts on reboot
 ```
 
-Then:
+Then (first launch only):
 
-1. Open **http://localhost:5678** and create your n8n account (first visit only)
+1. Open **http://localhost:5678** and create your n8n account
 2. Import **`n8n-workflows/discord-shopify-mcp-agent.docker.json`**
 3. Add **Google Vertex** credentials and set your GCP project ID in the Chat Model node
 4. **Activate** the workflow
 5. Message your bot in Discord
 
-Guides: [n8n workflow setup](docs/n8n-setup.md) (local + cloud) · [Docker walkthrough](docs/docker-setup.md)
+Vertex credentials are also saved once — they persist in the n8n Docker volume.
 
-### Live Shopify store
+Guides: [n8n workflow setup](docs/n8n-setup.md) (local + cloud) · [Docker walkthrough](docs/docker-setup.md) · [Shopify credentials](docs/shopify-setup.md)
+
+### Mock demo (no Shopify store)
 
 ```bash
-cp .env.docker.example .env
-# Set SHOPIFY_DOMAIN, SHOPIFY_ACCESS_TOKEN, DISCORD_BOT_TOKEN
-# Set SHOPIFY_MOCK_MODE=false and SHOPIFY_READ_ONLY=false when ready for writes
-
-npm run docker:up
+npm run setup          # choose mock mode when prompted
+npm run docker:mock
 ```
+
+### Enable write tools later
+
+Edit `config/.env` and set `SHOPIFY_READ_ONLY=false`, then `docker compose restart mcp`.
 
 ---
 
@@ -150,6 +152,7 @@ High-risk writes (inventory changes, fulfillments, refunds, price updates) retur
 
 ```
 shopify-discord-agent/
+├── config/                  # Permanent credentials (config/.env — created by npm run setup)
 ├── assets/                  # Demo video + README images
 ├── docs/                    # Setup guides (incl. n8n local + cloud)
 ├── lib/                     # Shopify client, tool registry, mock data
@@ -216,6 +219,7 @@ For **n8n Cloud**, the MCP server must be on a public HTTPS URL — see [docs/n8
 
 | Command | What it does |
 |---------|--------------|
+| `npm run setup` | One-time credential wizard → `config/.env` |
 | `npm run docker:mock` | Start full stack with mock Shopify |
 | `npm run docker:up` | Start stack with live Shopify |
 | `npm run mcp:mock` | MCP server only (mock) |

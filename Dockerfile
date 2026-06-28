@@ -10,6 +10,7 @@ RUN npm ci --omit=dev
 COPY shopify-mcp-server.mjs ./
 COPY lib ./lib
 COPY tools ./tools
+COPY config/.env.example ./config/
 COPY scripts/discord-bridge.mjs ./scripts/
 COPY scripts/import-workflow.mjs ./scripts/
 COPY n8n-workflows ./n8n-workflows

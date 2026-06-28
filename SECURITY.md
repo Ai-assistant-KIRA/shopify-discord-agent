@@ -10,8 +10,9 @@ If this project was ever committed with hardcoded tokens, **rotate them immediat
 
 ## Secrets policy
 
-- Never commit `.env`
-- Use `.env.example` with empty placeholder values only
+- Never commit `config/.env` or `.env`
+- Use `npm run setup` or `config/.env.example` with empty values only
+- Permanent credentials live in `config/.env` on the host (mode `600` after setup)
 - Store production secrets in your host's secret manager or n8n credentials UI
 
 ## Safe defaults

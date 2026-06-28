@@ -25,11 +25,16 @@ services:
     restart: unless-stopped
     command: node shopify-mcp-server.mjs
     env_file:
-      - .env
+      - path: config/.env
+        required: false
+      - path: .env
+        required: false
     environment:
       PORT: 3000
       SHOPIFY_MOCK_MODE: ${SHOPIFY_MOCK_MODE:-false}
       SHOPIFY_READ_ONLY: ${SHOPIFY_READ_ONLY:-true}
+    volumes:
+      - ./config:/app/config:ro
     ports:
       - "${MCP_PORT:-3000}:3000"
     healthcheck:
@@ -44,7 +49,12 @@ services:
     restart: unless-stopped
     command: node scripts/discord-bridge.mjs
     env_file:
-      - .env
+      - path: config/.env
+        required: false
+      - path: .env
+        required: false
+    volumes:
+      - ./config:/app/config:ro
     environment:
       N8N_WEBHOOK_URL: http://n8n:5678/webhook/discord
     depends_on:
