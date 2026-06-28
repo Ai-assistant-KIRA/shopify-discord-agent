@@ -1,0 +1,8 @@
+# Demo stack with mock Shopify data — no live store credentials required.
+# Usage: docker compose -f docker-compose.yml -f docker-compose.mock.yml up -d
+
+services:
+  mcp:
+    environment:
+      SHOPIFY_MOCK_MODE: "true"
+      SHOPIFY_READ_ONLY: "true"

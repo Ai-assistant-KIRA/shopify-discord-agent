@@ -1,0 +1,5 @@
+# Generated video artifacts (large binaries)
+intermediate/*
+!intermediate/.gitkeep
+output/*
+!output/.gitkeep

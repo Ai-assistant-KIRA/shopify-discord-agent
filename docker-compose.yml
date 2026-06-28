@@ -1,0 +1,57 @@
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    restart: unless-stopped
+    ports:
+      - "${N8N_PORT:-5678}:5678"
+    environment:
+      N8N_HOST: ${N8N_HOST:-localhost}
+      N8N_PORT: 5678
+      N8N_PROTOCOL: http
+      WEBHOOK_URL: ${N8N_WEBHOOK_URL:-http://localhost:5678/}
+      GENERIC_TIMEZONE: ${TZ:-UTC}
+      N8N_DIAGNOSTICS_ENABLED: "false"
+    volumes:
+      - n8n_data:/home/node/.n8n
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:5678/healthz || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+  mcp:
+    build: .
+    restart: unless-stopped
+    command: node shopify-mcp-server.mjs
+    env_file:
+      - .env
+    environment:
+      PORT: 3000
+      SHOPIFY_MOCK_MODE: ${SHOPIFY_MOCK_MODE:-false}
+      SHOPIFY_READ_ONLY: ${SHOPIFY_READ_ONLY:-true}
+    ports:
+      - "${MCP_PORT:-3000}:3000"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:3000/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 10s
+
+  bridge:
+    build: .
+    restart: unless-stopped
+    command: node scripts/discord-bridge.mjs
+    env_file:
+      - .env
+    environment:
+      N8N_WEBHOOK_URL: http://n8n:5678/webhook/discord
+    depends_on:
+      n8n:
+        condition: service_healthy
+      mcp:
+        condition: service_healthy
+
+volumes:
+  n8n_data:

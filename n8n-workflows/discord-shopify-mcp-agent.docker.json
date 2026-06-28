@@ -1,0 +1,273 @@
+{
+  "name": "Discord Shopify MCP Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "discord",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "discord-webhook-001",
+      "name": "Discord Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "discord-shopify-agent"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "skip-bot-messages",
+              "leftValue": "={{ $json.body.content }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "filter-empty-002",
+      "name": "Filter Empty Messages",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.content }}",
+        "options": {
+          "systemMessage": "You are a Shopify merchant assistant replying in Discord. Use MCP tools for real store data — never invent numbers.\n\nRead: inventory, products (list_products for catalog / search_products for keywords), orders (search/get/fulfillment), revenue (today or by period), discounts, drafts, customers, abandoned checkouts, low stock, location inventory.\nWrite low-risk (execute immediately): create_discount_code, deactivate_discount_code, create_draft_order, send_draft_order_invoice, resend_order_invoice.\nWrite high-risk (CONFIRM required): update_inventory_quantity, fulfill_order, cancel_order, create_refund, set_variant_price, set_product_status. When a tool returns CONFIRMATION REQUIRED, tell the user to reply CONFIRM <token>. When they do, call confirm_pending_write.\n\nRules:\n- For 'list products' or 'what do we sell', call list_products (not search_products with a vague term).\n- Format currency from tools (e.g. 29.99 USD). Keep replies under 1900 chars.\n- After writes, summarize what changed.\n- Use search_orders with filters; get_fulfillment_status before fulfill_order.\n- If a tool errors, suggest http://mcp:3000/health (or localhost:3000/health from host)."
+        }
+      },
+      "id": "ai-agent-003",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [700, 280],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "projectId": {
+          "mode": "id",
+          "value": "YOUR_GCP_PROJECT_ID"
+        },
+        "modelName": "gemini-2.5-flash",
+        "options": {}
+      },
+      "id": "vertex-model-004",
+      "name": "Google Vertex Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleVertex",
+      "typeVersion": 1,
+      "position": [560, 500],
+      "credentials": {
+        "googleApi": {
+          "name": "Google Vertex"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Discord Webhook').item.json.body.channel_id || $('Discord Webhook').item.json.body.user_id || 'discord-default' }}"
+      },
+      "id": "memory-005",
+      "name": "Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [700, 500]
+    },
+    {
+      "parameters": {
+        "serverTransport": "sse",
+        "endpointUrl": "http://mcp:3000/sse",
+        "include": "all",
+        "options": {}
+      },
+      "id": "mcp-tool-006",
+      "name": "Shopify MCP Tool",
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1.2,
+      "position": [840, 500]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "has-output",
+              "leftValue": "={{ $json.output }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "check-success-007",
+      "name": "Check Agent Output",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [940, 280]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "empty-output-msg",
+              "name": "output",
+              "value": "Sorry, I couldn't generate a reply. Make sure the MCP container is healthy (`docker compose logs mcp`), the workflow is active, and check the n8n execution log.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "format-empty-010",
+      "name": "Format Empty Response",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1180, 380]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "agent-error-msg",
+              "name": "output",
+              "value": "={{ 'Sorry, I could not process that request. ' + ($json.error?.message || $json.message || 'Check the MCP container and n8n execution logs.') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "format-error-011",
+      "name": "Format Agent Error",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [940, 480]
+    }
+  ],
+  "connections": {
+    "Discord Webhook": {
+      "main": [
+        [
+          {
+            "node": "Filter Empty Messages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Empty Messages": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Check Agent Output",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Format Agent Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Agent Output": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Format Empty Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Vertex Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Shopify MCP Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false,
+  "versionId": "2",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "pinData": {},
+  "id": "discord-shopify-mcp-agent"
+}

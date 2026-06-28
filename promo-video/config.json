@@ -1,0 +1,46 @@
+{
+  "project": "project-1299ef17-2cce-4839-99c",
+  "location": "us-central1",
+  "model": "veo-3.1-fast-generate-001",
+  "qaModel": "gemini-2.5-flash",
+  "aspectRatio": "16:9",
+  "resolution": "1080p",
+  "initialDurationSeconds": 8,
+  "extendDurationSeconds": 7,
+  "extendCount": 8,
+  "finalTrimSeconds": 60,
+  "fps": 24,
+  "personGeneration": "allow_adult",
+  "characterLock": "Same professional man from the reference image, exact face and likeness, navy hoodie, confident presenter, photorealistic, clean corporate lighting, orange and teal accent highlights.",
+  "negativePrompt": "blurry face, distorted hands, text gibberish, watermark, low resolution, cartoon, child",
+  "palette": {
+    "navy": "#1a1f2e",
+    "orange": "#FF6B35",
+    "teal": "#00B4D8"
+  },
+  "avatar": {
+    "primary": "../../whoax-avatar-images/avatar-styled.png",
+    "backup": "../../whoax-avatar-images/avatar-base.png",
+    "references": [
+      "../../whoax-avatar-images/09-n8n.jpg",
+      "../../whoax-avatar-images/05-shopify.jpg"
+    ]
+  },
+  "gcs": {
+    "bucket": "gs://shopify-discord-promo-99c",
+    "inputsPrefix": "inputs/",
+    "outputPrefix": "veo-output/",
+    "avatarObject": "inputs/avatar-styled.png"
+  },
+  "paths": {
+    "scenes": "promo-video/scenes.json",
+    "intermediate": "promo-video/intermediate",
+    "output": "promo-video/output",
+    "finalVideo": "promo-video/output/shopify-discord-agent-promo.mp4"
+  },
+  "env": {
+    "GOOGLE_CLOUD_PROJECT": "project-1299ef17-2cce-4839-99c",
+    "GOOGLE_CLOUD_LOCATION": "us-central1",
+    "GOOGLE_GENAI_USE_VERTEXAI": "true"
+  }
+}

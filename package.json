@@ -1,0 +1,37 @@
+{
+  "name": "shopify-discord-agent",
+  "version": "1.0.0",
+  "description": "Ask your Shopify store anything in Discord. Open-source n8n + Gemini + MCP agent with 28 tools for inventory, orders, revenue, and discounts.",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "mcp": "node shopify-mcp-server.mjs",
+    "mcp:mock": "cross-env SHOPIFY_MOCK_MODE=true node shopify-mcp-server.mjs",
+    "bridge": "node scripts/discord-bridge.mjs",
+    "verify:shopify": "node scripts/verify-shopify-creds.mjs",
+    "import:workflow": "node scripts/import-workflow.mjs",
+    "test": "node tests/mcp-integration.test.mjs",
+    "test:live": "node scripts/test-live-all-tools.mjs",
+    "dev": "npm run mcp:mock",
+    "docker:up": "docker compose up -d --build",
+    "docker:mock": "docker compose -f docker-compose.yml -f docker-compose.mock.yml up -d --build",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f",
+    "promo:video": "python scripts/generate-promo-video.py",
+    "promo:video:pro": "python scripts/generate-promo-video.py --config promo-video/config-v30-pro.json",
+    "promo:setup": "python scripts/generate-promo-video.py --setup-only",
+    "promo:setup:pro": "python scripts/generate-promo-video.py --config promo-video/config-v30-pro.json --setup-only"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "discord.js": "^14.26.4",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+}

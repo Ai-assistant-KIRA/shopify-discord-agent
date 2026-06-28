@@ -1,0 +1,108 @@
+{
+  "title": "Shopify Discord Agent — GitHub Promo",
+  "targetDurationSeconds": 60,
+  "rawDurationSeconds": 64,
+  "characterLock": "Same professional man from the reference image, exact face and likeness, navy hoodie, confident presenter, photorealistic, clean corporate lighting, orange and teal accent highlights.",
+  "scenes": [
+    {
+      "id": 1,
+      "slug": "hook",
+      "type": "image-to-video",
+      "timeStart": "0:00",
+      "timeEnd": "0:08",
+      "durationSeconds": 8,
+      "title": "Hook",
+      "dialogue": "Running a Shopify store means jumping between admin screens for every quick question. Shopify Discord Agent fixes that — ask your store in plain English, right from Discord.",
+      "visualPrompt": "Medium shot, same professional man from reference image at a modern dark desk, subtle Discord and Shopify logos glowing on monitors behind him, slow dolly in, 1080p cinematic corporate style, orange rim light, teal screen accents."
+    },
+    {
+      "id": 2,
+      "slug": "problem",
+      "type": "extend",
+      "timeStart": "0:08",
+      "timeEnd": "0:15",
+      "durationSeconds": 7,
+      "title": "Problem",
+      "dialogue": "Stock checks, revenue, orders, discounts — your team shouldn't need five tabs and a login every time.",
+      "visualPrompt": "Camera pans to split-screen of cluttered Shopify admin UI morphing into a clean Discord chat window, avatar gestures at the transition, same face and wardrobe, smooth motion."
+    },
+    {
+      "id": 3,
+      "slug": "architecture",
+      "type": "extend",
+      "timeStart": "0:15",
+      "timeEnd": "0:22",
+      "durationSeconds": 7,
+      "title": "Architecture",
+      "dialogue": "Here's the stack: Discord bridge, n8n AI agent, Gemini on Vertex, and a custom MCP server with twenty-nine Shopify tools.",
+      "visualPrompt": "Animated diagram overlay: Discord → n8n → Gemini → MCP → Shopify Admin API, avatar points along the flow, dark tech office, teal connection lines, orange nodes."
+    },
+    {
+      "id": 4,
+      "slug": "read-demo",
+      "type": "extend",
+      "timeStart": "0:22",
+      "timeEnd": "0:29",
+      "durationSeconds": 7,
+      "title": "Read tools demo",
+      "dialogue": "Try: What's the stock for BB-TONER-200? Or: How much revenue today? The agent calls live GraphQL and answers in seconds.",
+      "visualPrompt": "Over-shoulder shot of Discord message appearing, then Shopify inventory and revenue cards materializing on screen, avatar nods, photorealistic UI mockups."
+    },
+    {
+      "id": 5,
+      "slug": "write-demo",
+      "type": "extend",
+      "timeStart": "0:29",
+      "timeEnd": "0:36",
+      "durationSeconds": 7,
+      "title": "Write tools demo",
+      "dialogue": "Create discount codes, draft orders, send invoices, update inventory — all through natural language.",
+      "visualPrompt": "Avatar types in Discord; coupon code LOVE and draft order confirmation animate on monitor, professional satisfied expression, shallow depth of field."
+    },
+    {
+      "id": 6,
+      "slug": "safety",
+      "type": "extend",
+      "timeStart": "0:36",
+      "timeEnd": "0:43",
+      "durationSeconds": 7,
+      "title": "Safety",
+      "dialogue": "High-risk actions use a CONFIRM flow. Deploy read-only mode for safe demos, or mock mode with zero credentials.",
+      "visualPrompt": "CONFIRM token dialog appears in chat UI, avatar holds up hand in 'wait' gesture then thumbs up, safety-green accent on UI element."
+    },
+    {
+      "id": 7,
+      "slug": "docker",
+      "type": "extend",
+      "timeStart": "0:43",
+      "timeEnd": "0:50",
+      "durationSeconds": 7,
+      "title": "Docker quick start",
+      "dialogue": "One command: docker compose up. Import the n8n workflow, add your Discord token, and you're live — or run mock mode instantly.",
+      "visualPrompt": "Terminal with npm run docker:mock and green health checks, Docker containers icon row, avatar smiles at camera, clean dev setup aesthetic."
+    },
+    {
+      "id": 8,
+      "slug": "tool-breadth",
+      "type": "extend",
+      "timeStart": "0:50",
+      "timeEnd": "0:57",
+      "durationSeconds": 7,
+      "title": "Tool breadth",
+      "dialogue": "Search orders, fulfill shipments, cancel, refund, low-stock alerts, abandoned carts — one conversational interface.",
+      "visualPrompt": "Quick montage within scene: order list, fulfillment badge, refund receipt flash on screens, avatar confident presenter pose, energetic but professional."
+    },
+    {
+      "id": 9,
+      "slug": "cta",
+      "type": "extend",
+      "timeStart": "0:57",
+      "timeEnd": "1:00",
+      "durationSeconds": 7,
+      "title": "CTA",
+      "dialogue": "Open source, MIT licensed. Star it on GitHub and ship store ops in chat.",
+      "visualPrompt": "Avatar faces camera directly, GitHub star animation overlay, project title Shopify Discord Agent in clean sans-serif, warm closing smile, static hold for trim.",
+      "postTrimNote": "Trim last 4s of raw 64s clip to land at exactly 60.0s"
+    }
+  ]
+}
