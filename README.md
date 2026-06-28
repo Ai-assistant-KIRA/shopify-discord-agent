@@ -196,6 +196,7 @@ For **n8n Cloud**, the MCP server must be on a public HTTPS URL — see [docs/n8
 - [n8n workflow](docs/n8n-setup.md) — local self-hosted and n8n Cloud
 - [Docker Compose](docs/docker-setup.md) — recommended one-command stack
 - [Discord bot](docs/discord-setup.md) — token, intents, channel setup
+- [Customer demo server](docs/discord-demo-server.md) — `npm run discord:demo-setup`
 - [Shopify credentials](docs/shopify-setup.md) — dev store + Admin API token
 - [Architecture](docs/architecture.md) — tools, safety tiers, data flow
 

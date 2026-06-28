@@ -1,5 +1,7 @@
 # Discord Setup
 
+**Customer demo?** See [discord-demo-server.md](discord-demo-server.md) — run `npm run discord:demo-setup` after inviting the bot.
+
 ## 1. Create a Discord application
 
 1. Go to [Discord Developer Portal](https://discord.com/developers/applications)
