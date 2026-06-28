@@ -1,8 +1,18 @@
 # Shopify Discord Agent
 
+[![MCP Integration Tests](https://github.com/Ai-assistant-KIRA/shopify-discord-agent/actions/workflows/test.yml/badge.svg)](https://github.com/Ai-assistant-KIRA/shopify-discord-agent/actions/workflows/test.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Node.js 20+](https://img.shields.io/badge/node-%3E%3D20-brightgreen)](package.json)
+
 **Ask your Shopify store questions in Discord.** Type what you need — stock levels, today's revenue, order status, discount codes — and get live answers without opening the admin.
 
 Built with **Discord**, **n8n**, **Google Gemini (Vertex AI)**, and a custom **MCP tool server** that wraps the Shopify Admin GraphQL API.
+
+### Why I built this
+
+- **Problem** — E-commerce ops teams live in Discord, but every stock check or revenue question meant opening Shopify admin.
+- **Approach** — Expose Shopify as typed MCP tools (not brittle n8n HTTP nodes) and let Gemini pick the right action via an n8n AI Agent.
+- **Outcome** — 28 tools, mock mode for zero-credential demos, and a CONFIRM gate on high-risk writes so the agent can act safely in production chat.
 
 <p align="center">
   <img src="assets/images/hero-workspace.png" alt="Shopify Discord Agent — workspace hero" width="100%" />
@@ -244,5 +254,6 @@ MIT — see [LICENSE](LICENSE).
 ---
 
 <p align="center">
-  <sub>Built for teams who live in Discord and run on Shopify.</sub>
+  <strong>Built by <a href="https://www.linkedin.com/in/reda-alaarabi">Reda Alaarabi</a></strong><br>
+  <sub>Automation · e-commerce integrations · AI agents</sub>
 </p>

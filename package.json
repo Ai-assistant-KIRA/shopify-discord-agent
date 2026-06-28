@@ -2,6 +2,12 @@
   "name": "shopify-discord-agent",
   "version": "1.0.0",
   "description": "Ask your Shopify store anything in Discord. Open-source n8n + Gemini + MCP agent with 28 tools for inventory, orders, revenue, and discounts.",
+  "author": "Reda Alaarabi",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ai-assistant-KIRA/shopify-discord-agent.git"
+  },
+  "homepage": "https://github.com/Ai-assistant-KIRA/shopify-discord-agent#readme",
   "type": "module",
   "license": "MIT",
   "engines": {
