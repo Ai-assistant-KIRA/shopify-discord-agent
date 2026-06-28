@@ -55,6 +55,8 @@ Full n8n instructions (local + cloud): [n8n-setup.md](n8n-setup.md)
 
 Verify MCP: **http://localhost:3000/health**
 
+Pre-flight before go-live: `npm run verify:production` — see [production-checklist.md](production-checklist.md)
+
 ## Live Shopify store
 
 Run `npm run setup` with your store domain and `shpat_` token, then:

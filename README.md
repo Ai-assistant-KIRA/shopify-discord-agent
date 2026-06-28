@@ -148,6 +148,25 @@ High-risk writes (inventory changes, fulfillments, refunds, price updates) retur
 
 ---
 
+## Production use
+
+After `npm run setup`, users still need a **one-time n8n workflow import** (Vertex credential — persists in Docker volume). Then:
+
+```bash
+npm run docker:up
+npm run verify:production   # pre-flight check
+```
+
+| Ready for | Requirements |
+|-----------|--------------|
+| **Read-only pilot** | `config/.env` + active n8n workflow + channel allowlist |
+| **Daily ops** | Above + HTTPS if remote + `MCP_API_KEY` if MCP is public |
+| **Write-enabled** | Above + `SHOPIFY_READ_ONLY=false` + team CONFIRM training |
+
+Full checklist: [docs/production-checklist.md](docs/production-checklist.md)
+
+---
+
 ## Project layout
 
 ```
@@ -199,6 +218,7 @@ For **n8n Cloud**, the MCP server must be on a public HTTPS URL — see [docs/n8
 - [Customer demo server](docs/discord-demo-server.md) — `npm run discord:demo-setup`
 - [Shopify credentials](docs/shopify-setup.md) — dev store + Admin API token
 - [Architecture](docs/architecture.md) — tools, safety tiers, data flow
+- [Production checklist](docs/production-checklist.md) — go-live hardening
 
 ---
 
@@ -211,6 +231,8 @@ For **n8n Cloud**, the MCP server must be on a public HTTPS URL — see [docs/n8
 | `SHOPIFY_DOMAIN` | — | Shopify store domain |
 | `SHOPIFY_ACCESS_TOKEN` | — | Admin API token (`shpat_…`) |
 | `DISCORD_BOT_TOKEN` | — | Bot token for the bridge |
+| `DISCORD_ALLOWED_CHANNEL_IDS` | — | Comma-separated channel IDs (recommended) |
+| `MCP_API_KEY` | auto-generated | Bearer auth on MCP SSE (required if public) |
 | `N8N_WEBHOOK_URL` | `http://localhost:5678/webhook/discord` | Production webhook |
 | `PORT` | `3000` | MCP server port |
 
@@ -226,6 +248,8 @@ For **n8n Cloud**, the MCP server must be on a public HTTPS URL — see [docs/n8
 | `npm run mcp:mock` | MCP server only (mock) |
 | `npm run bridge` | Discord → n8n bridge |
 | `npm run verify:shopify` | Test API credentials |
+| `npm run verify:production` | Pre-flight production check |
+| `npm run discord:demo-setup` | Create demo Discord channels |
 | `npm test` | MCP integration tests |
 
 ---

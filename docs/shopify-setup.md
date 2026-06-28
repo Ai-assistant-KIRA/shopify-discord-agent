@@ -18,6 +18,8 @@ After that, `npm run docker:up` always uses the same credentials. No re-entry on
 
 To update credentials later, run `npm run setup` again or edit `config/.env` directly.
 
+Before go-live: `npm run verify:production` — see [production-checklist.md](production-checklist.md).
+
 ### What persists where
 
 | Credential | Stored in | Survives `docker compose restart` | Survives `docker compose down` |

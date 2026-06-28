@@ -208,8 +208,15 @@ npm run bridge
 
 ---
 
+## Production notes
+
+- Keep n8n on a **private network** when possible — the Discord webhook has no built-in HMAC
+- If MCP is public (n8n Cloud), set `MCP_API_KEY` in `config/.env` and configure auth on the MCP Client Tool node
+- Run `npm run verify:production` before go-live
+
 ## Related guides
 
+- [Production checklist](production-checklist.md)
 - [Docker Compose setup](docker-setup.md)
 - [Discord bot setup](discord-setup.md)
 - [Shopify credentials](shopify-setup.md)

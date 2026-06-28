@@ -4,6 +4,7 @@
  *
  * Usage: npm run setup
  */
+import crypto from "crypto";
 import fs from "fs";
 import path from "path";
 import readline from "readline";
@@ -115,6 +116,14 @@ async function main() {
   const readOnlyAnswer = await ask(rl, "Read-only mode? (hide write tools) (Y/n)", { defaultValue: "y" });
   const readOnly = readOnlyAnswer.toLowerCase() !== "n";
 
+  const channelIds = await ask(
+    rl,
+    "Discord channel ID to allow (optional — run npm run discord:demo-setup later)",
+    { defaultValue: "" }
+  );
+
+  const mcpApiKey = crypto.randomBytes(24).toString("hex");
+
   rl.close();
 
   const lines = [
@@ -127,10 +136,10 @@ async function main() {
     "SHOPIFY_CLI_AUTH=false",
     "",
     `DISCORD_BOT_TOKEN=${discordToken}`,
-    "DISCORD_ALLOWED_CHANNEL_IDS=",
+    `DISCORD_ALLOWED_CHANNEL_IDS=${channelIds}`,
     "",
     "PORT=3000",
-    "MCP_API_KEY=",
+    `MCP_API_KEY=${mcpApiKey}`,
     "",
     "N8N_WEBHOOK_URL=http://localhost:5678/webhook/discord",
     "N8N_PORT=5678",
@@ -142,10 +151,14 @@ async function main() {
 
   console.log("Saved credentials to config/.env\n");
   console.log("Next steps:");
-  console.log("  1. npm run docker:up          # starts stack (auto-restarts on reboot)");
-  console.log("  2. Open http://localhost:5678 — import workflow, add Vertex creds, activate");
-  console.log("  3. Message your bot in Discord\n");
-  console.log("Credentials persist across docker compose down / up. Only docker compose down -v resets n8n data.\n");
+  console.log("  1. npm run docker:up              # starts stack (auto-restarts on reboot)");
+  console.log("  2. Open http://localhost:5678     # import workflow, add Vertex creds, activate");
+  console.log("  3. npm run discord:demo-setup     # optional: create #store-ops channel");
+  console.log("  4. npm run verify:production      # pre-flight check");
+  console.log("  5. Message your bot in Discord\n");
+  console.log("Credentials persist across docker compose down / up.");
+  console.log("Only docker compose down -v resets n8n data.");
+  console.log("Production hardening: docs/production-checklist.md\n");
 
   if (fs.existsSync(examplePath)) {
     // no-op; example stays for reference
