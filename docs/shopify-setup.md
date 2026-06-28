@@ -4,7 +4,7 @@
 
 1. Create a [Shopify Partner](https://partners.shopify.com/) account
 2. Create a **development store**
-3. Note the domain: `your-store.myshopify.com`
+3. Note the domain (e.g. `mystore.myshopify.com`)
 
 ## Custom app and Admin API token
 
@@ -27,8 +27,8 @@
 ## Environment
 
 ```env
-SHOPIFY_DOMAIN=your-store.myshopify.com
-SHOPIFY_ACCESS_TOKEN=shpat_xxxxxxxx
+SHOPIFY_DOMAIN=mystore.myshopify.com
+SHOPIFY_ACCESS_TOKEN=shpat_...
 SHOPIFY_API_VERSION=2025-01
 SHOPIFY_MOCK_MODE=false
 SHOPIFY_READ_ONLY=true

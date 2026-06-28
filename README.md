@@ -13,6 +13,7 @@ Built with **Discord**, **n8n**, **Google Gemini (Vertex AI)**, and a custom **M
   <a href="#demo-video">Demo</a> ·
   <a href="#what-it-does">Features</a> ·
   <a href="#architecture">Architecture</a> ·
+  <a href="docs/n8n-setup.md">n8n setup</a> ·
   <a href="docs/docker-setup.md">Docker guide</a>
 </p>
 
@@ -47,7 +48,7 @@ Then:
 4. **Activate** the workflow
 5. Message your bot in Discord
 
-Full walkthrough: [docs/docker-setup.md](docs/docker-setup.md)
+Guides: [n8n workflow setup](docs/n8n-setup.md) (local + cloud) · [Docker walkthrough](docs/docker-setup.md)
 
 ### Live Shopify store
 
@@ -140,10 +141,9 @@ High-risk writes (inventory changes, fulfillments, refunds, price updates) retur
 ```
 shopify-discord-agent/
 ├── assets/                  # Demo video + README images
-├── docs/                    # Setup guides
+├── docs/                    # Setup guides (incl. n8n local + cloud)
 ├── lib/                     # Shopify client, tool registry, mock data
 ├── n8n-workflows/           # Importable workflow JSON
-├── promo-video/             # Veo promo generation (optional)
 ├── scripts/
 │   ├── discord-bridge.mjs   # Discord ↔ n8n
 │   ├── import-workflow.mjs
@@ -174,11 +174,14 @@ npm run bridge            # terminal 3 — Discord listener
 
 Health check: [http://localhost:3000/health](http://localhost:3000/health)
 
+For **n8n Cloud**, the MCP server must be on a public HTTPS URL — see [docs/n8n-setup.md](docs/n8n-setup.md).
+
 ---
 
 ## Setup guides
 
-- [Docker Compose](docs/docker-setup.md) — recommended
+- [n8n workflow](docs/n8n-setup.md) — local self-hosted and n8n Cloud
+- [Docker Compose](docs/docker-setup.md) — recommended one-command stack
 - [Discord bot](docs/discord-setup.md) — token, intents, channel setup
 - [Shopify credentials](docs/shopify-setup.md) — dev store + Admin API token
 - [Architecture](docs/architecture.md) — tools, safety tiers, data flow
@@ -191,7 +194,7 @@ Health check: [http://localhost:3000/health](http://localhost:3000/health)
 |----------|---------|---------|
 | `SHOPIFY_MOCK_MODE` | `true` | Sample data instead of live API |
 | `SHOPIFY_READ_ONLY` | `true` | Hide write tools |
-| `SHOPIFY_DOMAIN` | — | `your-store.myshopify.com` |
+| `SHOPIFY_DOMAIN` | — | Shopify store domain |
 | `SHOPIFY_ACCESS_TOKEN` | — | Admin API token (`shpat_…`) |
 | `DISCORD_BOT_TOKEN` | — | Bot token for the bridge |
 | `N8N_WEBHOOK_URL` | `http://localhost:5678/webhook/discord` | Production webhook |

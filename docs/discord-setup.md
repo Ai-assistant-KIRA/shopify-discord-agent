@@ -42,4 +42,6 @@ Only messages in those channels are forwarded to n8n.
 npm run bridge
 ```
 
-The bridge forwards messages to `http://localhost:5678/webhook/discord`, waits for the workflow to finish (`responseMode: lastNode`), and posts **one** reply in Discord. Ensure the n8n workflow is **active** and you imported workflow **version 2** (no n8n Discord send nodes).
+The bridge forwards messages to `N8N_WEBHOOK_URL` (default `http://localhost:5678/webhook/discord`), waits for the workflow to finish (`responseMode: lastNode`), and posts **one** reply in Discord. For **n8n Cloud**, set `N8N_WEBHOOK_URL` to your production webhook URL — see [n8n-setup.md](n8n-setup.md).
+
+Ensure the n8n workflow is **active** and you imported workflow **version 2** (no n8n Discord send nodes).

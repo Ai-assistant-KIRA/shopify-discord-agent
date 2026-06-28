@@ -5,8 +5,4 @@ node_modules/
 *.log
 coverage/
 __pycache__/
-promo-video/intermediate/
-promo-video/output/*.mp4
-promo-video/output/*.txt
-!promo-video/output/.gitkeep
 !assets/demo.mp4

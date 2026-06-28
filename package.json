@@ -19,11 +19,7 @@
     "docker:up": "docker compose up -d --build",
     "docker:mock": "docker compose -f docker-compose.yml -f docker-compose.mock.yml up -d --build",
     "docker:down": "docker compose down",
-    "docker:logs": "docker compose logs -f",
-    "promo:video": "python scripts/generate-promo-video.py",
-    "promo:video:pro": "python scripts/generate-promo-video.py --config promo-video/config-v30-pro.json",
-    "promo:setup": "python scripts/generate-promo-video.py --setup-only",
-    "promo:setup:pro": "python scripts/generate-promo-video.py --config promo-video/config-v30-pro.json --setup-only"
+    "docker:logs": "docker compose logs -f"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",

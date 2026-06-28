@@ -43,6 +43,8 @@ docker compose -f docker-compose.yml -f docker-compose.mock.yml up -d --build
 5. **Activate** the workflow.
 6. Message your bot in Discord.
 
+Full n8n instructions (local + cloud): [n8n-setup.md](n8n-setup.md)
+
 Verify MCP: **http://localhost:3000/health**
 
 ## Live Shopify store

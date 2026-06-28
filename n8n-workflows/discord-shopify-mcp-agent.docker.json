@@ -63,7 +63,7 @@
       "parameters": {
         "projectId": {
           "mode": "id",
-          "value": "YOUR_GCP_PROJECT_ID"
+          "value": ""
         },
         "modelName": "gemini-2.5-flash",
         "options": {}
